@@ -70,13 +70,6 @@ angular.module('todo', ['ionic'])
     Projects.setLastActiveIndex(index);
     $ionicSideMenuDelegate.toggleLeft(false);
   };
-  //
-  // $scope.tasks=[
-  //   {title:"14－下午去图书馆"},
-  //   {title:"15－下午去找莫老师对接"},
-  //   {title:"15－晚广东同乡吃饭"},
-  //   {title:"22－交论文展示咻咻咻"},
-  // ];
 
   $ionicModal.fromTemplateUrl('new-task.html',
     function (modal) {
@@ -91,11 +84,18 @@ angular.module('todo', ['ionic'])
         return;
       }
       $scope.activeProject.tasks.push({
-        title:task.title
+        title:task.title,
+        done:false
       });
       $scope.taskModal.hide();
       task.title = "";
 
+      Projects.save($scope.projects);
+    }
+
+    $scope.changeTaskState = function(task, $index){
+      task.done = !task.done;
+      $scope.activeProject.tasks[$index] = task;
       Projects.save($scope.projects);
     }
 
@@ -116,9 +116,7 @@ angular.module('todo', ['ionic'])
       if (!$scope.activeProject || !task) {
         return;
       }
-      // $scope.activeProject.tasks.splice($index, 1);
       $scope.activeProject.tasks.splice($index, 1);
-
       Projects.save($scope.projects);
     }
 
