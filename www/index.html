@@ -45,7 +45,8 @@
         <ion-content scroll="false">
           <ion-list>
             <ion-item ng-repeat="task in activeProject.tasks"
-              ng-click="delTask(task, $index)">
+              ng-click="changeTaskState(task, $index)"
+              ng-class="{done: task.done}">
               {{task.title}}
             </ion-item>
           </ion-list>
