@@ -71,10 +71,10 @@
             show-delete="shouldShowProjectDelete"
             on-hold="showProjectDelete()">
             <ion-item ng-repeat="project in projects"
-              ng-click="selectProject(project, $index)"
+              on-tap="selectProject(project, $index)"
               ng-class="{active: activeProject == project}">
               <ion-delete-button class="ion-minus-circled"
-                ng-click="delProject(project, $index);$event.stopPropagation();"></ion-delete-button>
+                on-tap="delProject(project, $index);$event.stopPropagation();"></ion-delete-button>
               {{project.title}}
             </ion-item>
           </ion-list>
