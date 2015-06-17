@@ -50,7 +50,7 @@
               ng-class="{done: task.done}">
               {{task.title}}
               <ion-delete-button class="ion-minus-circled"
-                on-tap="delTask(task, $index)"></ion-delete-button>
+                on-tap="delTask(task, $index);$event.stopPropagation();"></ion-delete-button>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -63,7 +63,7 @@
         <ion-header-bar class="bar-positive">
           <h1 class="title">Projects</h1>
           <button class="button button-icon ion-plus"
-            ng-clicsk="newProject()">
+            on-tap="newProject()">
           </button>
         </ion-header-bar>
         <ion-content scroll="false">
@@ -74,7 +74,7 @@
               ng-click="selectProject(project, $index)"
               ng-class="{active: activeProject == project}">
               <ion-delete-button class="ion-minus-circled"
-                ng-click="delProject(project, $index)"></ion-delete-button>
+                ng-click="delProject(project, $index);$event.stopPropagation();"></ion-delete-button>
               {{project.title}}
             </ion-item>
           </ion-list>
