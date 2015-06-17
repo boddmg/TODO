@@ -29,29 +29,28 @@
         <ion-header-bar align-title="left" class="bar-positive">
           <!-- Project button -->
           <button class="button button-icon"
-            ng-click="toggleProjects()">
+            on-tap="toggleProjects()">
             <i class="icon ion-navicon"></i>
           </button>
-
-          <h1 class="title">Todo</h1>
+          <h1 class="title">TODO</h1>
 
           <!-- New task button -->
           <button class="button button-icon"
-            ng-click="newTask()">
+            on-tap="newTask()">
             <i class="icon ion-compose"></i>
           </button>
         </ion-header-bar>
 
         <ion-content scroll="false">
           <ion-list show-delete="shouldShowTaskDelete"
-            ng-click="hideAllDelete()"
+            on-tap="hideAllDelete()"
             on-hold="showTaskDelete()">
             <ion-item ng-repeat="task in activeProject.tasks"
-              ng-click="changeTaskState(task, $index)"
+              on-tap="changeTaskState(task, $index)"
               ng-class="{done: task.done}">
               {{task.title}}
               <ion-delete-button class="ion-minus-circled"
-                ng-click="delTask(task, $index)"></ion-delete-button>
+                on-tap="delTask(task, $index)"></ion-delete-button>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -59,17 +58,17 @@
       </ion-side-menu-content>
 
       <!-- Left menu -->
-      <ion-side-menu side="left">
+      <ion-side-menu side="left"
+        ng-click="hideAllDelete()">
         <ion-header-bar class="bar-positive">
           <h1 class="title">Projects</h1>
           <button class="button button-icon ion-plus"
-            ng-click="newProject()">
+            ng-clicsk="newProject()">
           </button>
         </ion-header-bar>
         <ion-content scroll="false">
           <ion-list
             show-delete="shouldShowProjectDelete"
-            ng-click="hideAllDelete()"
             on-hold="showProjectDelete()">
             <ion-item ng-repeat="project in projects"
               ng-click="selectProject(project, $index)"
