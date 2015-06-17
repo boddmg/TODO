@@ -43,11 +43,15 @@
         </ion-header-bar>
 
         <ion-content scroll="false">
-          <ion-list>
+          <ion-list show-delete="shouldShowTaskDelete"
+            ng-click="hideAllDelete()"
+            on-hold="showTaskDelete()">
             <ion-item ng-repeat="task in activeProject.tasks"
               ng-click="changeTaskState(task, $index)"
               ng-class="{done: task.done}">
               {{task.title}}
+              <ion-delete-button class="ion-minus-circled"
+                ng-click="delTask(task, $index)"></ion-delete-button>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -63,10 +67,15 @@
           </button>
         </ion-header-bar>
         <ion-content scroll="false">
-          <ion-list>
+          <ion-list
+            show-delete="shouldShowProjectDelete"
+            ng-click="hideAllDelete()"
+            on-hold="showProjectDelete()">
             <ion-item ng-repeat="project in projects"
               ng-click="selectProject(project, $index)"
               ng-class="{active: activeProject == project}">
+              <ion-delete-button class="ion-minus-circled"
+                ng-click="delProject(project, $index)"></ion-delete-button>
               {{project.title}}
             </ion-item>
           </ion-list>
@@ -99,6 +108,34 @@
           </ion-content>
         </div>
       </script>
+
+      <script id="new-project.html" type="text/ng-template">
+          <div class="modal">
+            <ion-header-bar class="bar-secondary">
+              <h1 class="title">New Project</h1>
+              <button class="button button-clear button-positive"
+                ng-click="closeNewProject()">Cancel</button>
+            </ion-header-bar>
+
+            <ion-content>
+              <form ng-submit="createProject(project)">
+                <div class="list">
+                  <label class="item item-input">
+                    <input type="text"
+                      placeholder="New project name"
+                      name="name" ng-model="project.title">
+                  </label>
+                </div>
+                <div class="padding">
+                  <button type="submit"
+                    class="button button-block button-positive">
+                    Create Project</button>
+                </div>
+              </form>
+            </ion-content>
+          </div>
+        </script>
+
     </ion-side-menus>
   </body>
 </html>
