@@ -41,29 +41,32 @@ angular.module('todo', ['ionic'])
 .controller('todo_controller', function (
   $scope, $timeout, $ionicModal,
   Projects, $ionicSideMenuDelegate) {
-  // A utility function for creating a new project
-  // with the given projectTitle
-  var createProject = function(projectTitle) {
-    var newProject = Projects.newProject(projectTitle);
-    $scope.projects.push(newProject);
-    Projects.save($scope.projects);
-    $scope.selectProject(newProject, $scope.projects.length-1);
-  }
-
   // Load or initialize projects
   $scope.projects = Projects.all();
 
   // Grab the last active, or the first project
   $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
 
+  // A utility function for creating a new project
+  // with the given project.
+  $scope.createProject = function(project) {
+    $scope.projectModal.hide();
+    var newProject = Projects.newProject(project.title);
+    $scope.projects.push(newProject);
+    Projects.save($scope.projects);
+    $scope.selectProject(newProject, $scope.projects.length-1);
+    project.title = "";
+  }
+
   // Called to create a new project
   $scope.newProject = function() {
     $scope.hideAllDelete();
-    var projectTitle = prompt('Project name');
-    if(projectTitle) {
-      createProject(projectTitle);
-    }
+    $scope.projectModal.show();
   };
+
+  $scope.closeNewProject = function() {
+    $scope.projectModal.hide();
+  }
 
   // Called to select the given project
   $scope.selectProject = function(project, $index) {
@@ -103,15 +106,15 @@ angular.module('todo', ['ionic'])
     Projects.save($scope.projects);
   }
 
+  $scope.newTask = function() {
+    $scope.hideAllDelete();
+    $scope.taskModal.show();
+  }
+
   $scope.changeTaskState = function(task, $index){
     task.done = !task.done;
     $scope.activeProject.tasks[$index] = task;
     Projects.save($scope.projects);
-  }
-
-  $scope.newTask = function() {
-    $scope.hideAllDelete();
-    $scope.taskModal.show();
   }
 
   $scope.closeNewTask = function() {
